@@ -45,7 +45,8 @@ export class UsersController {
   findAll(@Query('tenantId') tenantId?: string, @GetUser() currentUser?: any) {
     // If admin, force filter by their own tenantId
     if (currentUser?.role === 'admin') {
-      return this.usersService.findAll(currentUser.tenantId.toString());
+      const id = currentUser.tenantId?._id || currentUser.tenantId;
+      return this.usersService.findAll(id.toString());
     }
     return this.usersService.findAll(tenantId);
   }
@@ -59,7 +60,9 @@ export class UsersController {
     if (!user) throw new NotFoundException('User not found');
     
     const userTenantId = user.tenantId?.['_id'] || user.tenantId;
-    if (currentUser?.role === 'admin' && userTenantId?.toString() !== currentUser.tenantId.toString()) {
+    const currentTenantId = currentUser.tenantId?._id || currentUser.tenantId;
+
+    if (currentUser?.role === 'admin' && userTenantId?.toString() !== currentTenantId?.toString()) {
       throw new ForbiddenException('Access denied');
     }
     
@@ -89,7 +92,9 @@ export class UsersController {
     // Tenant check for admins resetting others' passwords
     if (isAdmin && !isSelf) {
       const targetTenantId = targetUser.tenantId?.['_id'] || targetUser.tenantId;
-      if (targetTenantId?.toString() !== currentUser.tenantId.toString()) {
+      const currentTenantId = currentUser.tenantId?._id || currentUser.tenantId;
+
+      if (targetTenantId?.toString() !== currentTenantId?.toString()) {
         throw new ForbiddenException('You can only manage users in your organization');
       }
     }
