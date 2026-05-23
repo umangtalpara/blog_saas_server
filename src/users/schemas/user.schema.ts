@@ -14,7 +14,7 @@ export class User {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, select: false })
   passwordHash: string;
 
   @Prop({ required: true, default: 'viewer' })
@@ -22,6 +22,9 @@ export class User {
 
   @Prop({ default: 'active' })
   status: string;
+
+  @Prop()
+  profilePic?: string;
 
   @Prop({ select: false })
   refreshToken?: string;
