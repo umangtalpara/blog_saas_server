@@ -11,6 +11,8 @@ import { DomainsModule } from './domains/domains.module';
 import { BillingModule } from './billing/billing.module';
 import { MediaModule } from './media/media.module';
 import { TenantMiddleware } from './common/middleware/tenant.middleware';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { CommentsModule } from './comments/comments.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -33,6 +35,8 @@ import configuration from './config/configuration';
     DomainsModule,
     BillingModule,
     MediaModule,
+    AnalyticsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

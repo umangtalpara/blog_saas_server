@@ -73,6 +73,18 @@ export class Blog {
 
   @Prop()
   publishedAt?: Date;
+
+  @Prop({ default: 0 })
+  totalViews: number;
+
+  @Prop({ default: 0 })
+  totalLikes: number;
+
+  @Prop({ default: 0 })
+  totalShares: number;
+
+  @Prop({ default: 0 })
+  totalComments: number;
 }
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);
